@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SUDS: SOAP UI Debugging Solution</title>
+		<style type="text/css">@import "./stylesheets/site.css";</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<h1>SUDS: SOAP UI Debugging Solution</h1>
+			<div class="row-fluid">
+				<div class="span6">
+					<form method="get" action="#" class="well" id="request-form">
+						<fieldset class="form-horizontal request-basics">
+							<legend>Request Basics</legend>
+							<div>
+								<label for="request-basics-url" class="control-label">URL</label>
+								<div class="controls">
+									<input type="text" id="request-basics-url" class="input-block-level" placeholder="e.g. http://example.com/foo.svc">
+								</div>
+							</div>
+							<div>
+								<label for="request-basics-method" class="control-label">Method</label>
+								<div class="controls">
+									<select id="request-basics-method">
+										<option value="GET">GET</option>
+										<option value="POST" selected>POST</option>
+										<option value="PUT">PUT</option>
+										<option value="DELETE">DELETE</option>
+									</select>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset class="request-headers">
+							<legend>Request Headers</legend>
+							<p>
+								<input type="text" placeholder="Header name" value="Content-Type" readonly>:
+								<input type="text" placeholder="Header value" value="text/xml; charset=utf-8" readonly>
+							</p>
+							<p>
+								<input type="text" readonly value="SOAPAction">:
+								<input type="text" placeholder="Required">
+							</p>
+							<p>
+								<input type="text" placeholder="Header name" value="Accept-Encoding">:
+								<input type="text" placeholder="Header value" value="gzip, deflate">
+								<button type="button" class="btn btn-danger">Remove</button>
+							</p>
+							<p>
+								<input type="text" placeholder="Header name" value="Host">:
+								<input type="text" placeholder="Header value">
+								<button type="button" class="btn btn-danger">Remove</button>
+							</p>
+							<p>
+								<input type="text" placeholder="Header name">:
+								<input type="text" placeholder="Header value">
+								<button type="button" class="btn btn-danger">Remove</button>
+							</p>
+							<p class="request-headers-actions">
+								<button type="button" class="btn btn-block">Add Header</button>
+							</p>
+						</fieldset>
+						<fieldset>
+							<legend>Request Body</legend>
+							<textarea cols="80" rows="30" class="input-block-level"></textarea>
+						</fieldset>
+						<p>
+							<button type="reset" class="btn btn-warning">Clear Form</button>
+							<button type="submit" class="btn">Make Request</button>
+						</p>
+					</form>
+				</div>
+				<div class="span6">
+					<div class="well">
+						<fieldset>
+							<legend>Response State</legend>
+							<p>Ready State: <span>&ndash;</span></p>
+							<p>Status: <span>&ndash;</span></p>
+						</fieldset>
+						<fieldset>
+							<legend>Response Headers</legend>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="2">Please make a request.</td>
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
+						<fieldset>
+							<legend>Response Body</legend>
+							<textarea cols="80" rows="30" class="input-block-level"></textarea>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/html" id="request-header-tpl">
+			<p>
+				<input type="text" placeholder="Header name">:
+				<input type="text" placeholder="Header value">
+				<button type="button" class="btn btn-danger">Remove</button>
+			</p>
+		</script>
+		<script type="text/javascript" src="./vendor/jquery/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="./vendor/underscore/underscore.js"></script>
+		<script type="text/javascript" src="./vendor/backbone/backbone.js"></script>
+		<script type="text/javascript" src="./vendor/bootstrap/js/bootstrap.js"></script>
+		<script type="text/javascript" src="./vendor/vkBeautify/vkbeautify.js"></script>
+		<script type="text/javascript" src="./vendor/codemirror-3.14/lib/codemirror.js"></script>
+		<script type="text/javascript" src="./javascripts/suds.js"></script>
+		<script type="text/javascript" src="./javascripts/suds/request_view.js"></script>
+		<script type="text/javascript" src="./javascripts/app.js"></script>
+	</body>
+</html>
