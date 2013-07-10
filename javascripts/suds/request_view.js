@@ -160,9 +160,7 @@ Suds.RequestView = Backbone.View.extend({
 		var $el = jQuery("#transport");
 		var headers = transport.getAllResponseHeaders().split(/[\n\r]+/g);
 		var match;
-		var $table = $el.find("table tbody");
-
-		$table.find("tr.empty-row").empty();
+		var $table = $el.find("table tbody").empty();
 
 		$el.find("textarea").val(vkbeautify.xml(transport.responseText));
 
