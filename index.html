@@ -58,8 +58,16 @@
 						</fieldset>
 						<fieldset>
 							<legend>Request Body</legend>
-							<button type="button" class="btn" data-action="beautify-xml">Beautify XML</button>
+							<p>
+								<button type="button" class="btn" data-action="beautify-xml">Beautify XML</button>
+								<button type="button" class="btn" data-action="minify-xml">Minify XML</button>
+							</p>
 							<textarea cols="80" rows="30" name="request[body]" class="input-block-level" spellcheck="false"></textarea>
+							<p>
+								History:
+								<select class="body-history"></select>
+								<button type="button" class="btn" data-action="body-history-apply">Load</button>
+							</p>
 						</fieldset>
 						<p>
 							<button type="reset" class="btn btn-warning">Clear Form</button>

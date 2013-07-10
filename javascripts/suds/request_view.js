@@ -5,7 +5,9 @@ Suds.RequestView = Backbone.View.extend({
 		"click .request-headers-actions button": "addHeader",
 		"keypress .request-headers input[type=text]": "addHeader",
 		"submit": "makeSOAPRequest",
-		"click button[data-action=beautify-xml]": "beautifyRequestBodyXml"
+		"click button[data-action=beautify-xml]": "beautifyRequestBodyXml",
+		"click button[data-action=minify-xml]": "minifyRequestBodyXml",
+		"click button[data-action=body-history-apply]": "applySelectedBodyHistory"
 	},
 
 	transport: null,
@@ -17,6 +19,8 @@ Suds.RequestView = Backbone.View.extend({
 		if (!$hostValue.val()) {
 			$hostValue.val(window.location.hostname);
 		}
+
+		this.fillBodyHistory();
 	},
 
 	addHeader: function(event) {
@@ -33,6 +37,15 @@ Suds.RequestView = Backbone.View.extend({
 		}
 	},
 
+	applySelectedBodyHistory: function(event) {
+		event.preventDefault();
+		var body = this.$el.find(".body-history").val();
+
+		if (body) {
+			this.$el.find("textarea").val(decodeURIComponent(body));
+		}
+	},
+
 	beautifyRequestBodyXml: function(event) {
 		event.preventDefault();
 		var $body = this.$el.find("textarea");
@@ -46,6 +59,19 @@ Suds.RequestView = Backbone.View.extend({
 		else {
 			this.focus();
 		}
+	},
+
+	fillBodyHistory: function() {
+		var historyStr = localStorage["Suds.RequestView.bodyHistory"];
+		var history = JSON.parse(historyStr || "[]");
+		var $history = this.$el.find(".body-history");
+		var options = [];
+
+		for (var i = 0, length = history.length; i < length; i++) {
+			options.push('<option value="' + encodeURIComponent(history[i]) + '">' + (i + 1) + '</option>');
+		}
+
+		$history.append(options.join(""));
 	},
 
 	focus: function() {
@@ -101,10 +127,32 @@ Suds.RequestView = Backbone.View.extend({
 				}
 			};
 
+			this.recordBodyHistory(body);
 			this.transport.send(body);
 		}
 		catch (error) {
 			console.error(error);
+		}
+	},
+
+	minifyRequestBodyXml: function(event) {
+		event.preventDefault();
+		var $body = this.$el.find("textarea");
+		$body.val(vkbeautify.xmlmin($body.val()));
+	},
+
+	recordBodyHistory: function(s) {
+		var history = JSON.parse(localStorage["Suds.RequestView.bodyHistory"] || "[]");
+
+		if (history.indexOf(s) < 0) {
+			history.push(s);
+
+			if (history.length > 10) {
+				history.shift();
+			}
+
+			localStorage["Suds.RequestView.bodyHistory"] = JSON.stringify(history);
+			this.$el.find(".body-history").append('<option value="' + encodeURIComponent(s) + '">' + history.length + '</option>');
 		}
 	},
 
