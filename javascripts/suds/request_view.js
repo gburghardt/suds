@@ -158,7 +158,26 @@ Suds.RequestView = Backbone.View.extend({
 
 	recordRequest: function(transport) {
 		var $el = jQuery("#transport");
+		var headers = transport.getAllResponseHeaders().split(/[\n\r]+/g);
+		var match;
+		var $table = $el.find("table tbody");
+
+		$table.find("tr.empty-row").empty();
+
 		$el.find("textarea").val(vkbeautify.xml(transport.responseText));
+
+		for (var i = 0, length = headers.length; i < length; i++) {
+			match = headers[i].match(/([-\w]+):\s*(.*?)$/);
+
+			if (match) {
+				$table.append([
+					'<tr>',
+						'<td>' + match[1] + '</td>',
+						'<td>' + match[2] + '</td>',
+					'</tr>'
+				].join(""));
+			}
+		}
 	},
 
 	removeHeader: function(event) {
