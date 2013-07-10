@@ -17,13 +17,13 @@
 							<div>
 								<label for="request-basics-url" class="control-label">URL</label>
 								<div class="controls">
-									<input type="text" id="request-basics-url" class="input-block-level" placeholder="e.g. http://example.com/foo.svc">
+									<input type="text" id="request-basics-url" name="request[url]" class="input-block-level" placeholder="e.g. http://example.com/foo.svc">
 								</div>
 							</div>
 							<div>
 								<label for="request-basics-method" class="control-label">Method</label>
 								<div class="controls">
-									<select id="request-basics-method">
+									<select id="request-basics-method" name="request[method]">
 										<option value="GET">GET</option>
 										<option value="POST" selected>POST</option>
 										<option value="PUT">PUT</option>
@@ -35,26 +35,21 @@
 						<fieldset class="request-headers">
 							<legend>Request Headers</legend>
 							<p>
-								<input type="text" placeholder="Header name" value="Content-Type" readonly>:
-								<input type="text" placeholder="Header value" value="text/xml; charset=utf-8" readonly>
+								<input type="text" name="request[headers][name]" placeholder="Header name" value="Content-Type" readonly>:
+								<input type="text" name="request[headers][value]" placeholder="Header value" value="text/xml; charset=utf-8" readonly>
 							</p>
 							<p>
-								<input type="text" readonly value="SOAPAction">:
-								<input type="text" placeholder="Required">
+								<input type="text" name="request[headers][name]" readonly value="SOAPAction">:
+								<input type="text" name="request[headers][value]" placeholder="Required">
 							</p>
 							<p>
-								<input type="text" placeholder="Header name" value="Accept-Encoding">:
-								<input type="text" placeholder="Header value" value="gzip, deflate">
+								<input type="text" name="request[headers][name]" placeholder="Header name" value="Accept-Encoding">:
+								<input type="text" name="request[headers][value]" placeholder="Header value" value="gzip, deflate">
 								<button type="button" class="btn btn-danger">Remove</button>
 							</p>
 							<p>
-								<input type="text" placeholder="Header name" value="Host">:
-								<input type="text" placeholder="Header value">
-								<button type="button" class="btn btn-danger">Remove</button>
-							</p>
-							<p>
-								<input type="text" placeholder="Header name">:
-								<input type="text" placeholder="Header value">
+								<input type="text" name="request[headers][name]" placeholder="Header name" value="Host">:
+								<input type="text" name="request[headers][value]" placeholder="Header value">
 								<button type="button" class="btn btn-danger">Remove</button>
 							</p>
 							<p class="request-headers-actions">
@@ -63,7 +58,8 @@
 						</fieldset>
 						<fieldset>
 							<legend>Request Body</legend>
-							<textarea cols="80" rows="30" class="input-block-level"></textarea>
+							<button type="button" class="btn" data-action="beautify-xml">Beautify XML</button>
+							<textarea cols="80" rows="30" name="request[body]" class="input-block-level" spellcheck="false"></textarea>
 						</fieldset>
 						<p>
 							<button type="reset" class="btn btn-warning">Clear Form</button>
@@ -72,11 +68,11 @@
 					</form>
 				</div>
 				<div class="span6">
-					<div class="well">
+					<div class="well" id="transport">
 						<fieldset>
 							<legend>Response State</legend>
-							<p>Ready State: <span>&ndash;</span></p>
-							<p>Status: <span>&ndash;</span></p>
+							<p>Ready State: <span id="transport-readyState">&ndash;</span></p>
+							<p>Status: <span id="transport-status">&ndash;</span></p>
 						</fieldset>
 						<fieldset>
 							<legend>Response Headers</legend>
@@ -88,7 +84,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr class="empty-row">
 										<td colspan="2">Please make a request.</td>
 									</tr>
 								</tbody>
@@ -96,7 +92,7 @@
 						</fieldset>
 						<fieldset>
 							<legend>Response Body</legend>
-							<textarea cols="80" rows="30" class="input-block-level"></textarea>
+							<textarea cols="80" rows="30" class="input-block-level" spellcheck="false"></textarea>
 						</fieldset>
 					</div>
 				</div>
@@ -104,8 +100,8 @@
 		</div>
 		<script type="text/html" id="request-header-tpl">
 			<p>
-				<input type="text" placeholder="Header name">:
-				<input type="text" placeholder="Header value">
+				<input type="text" name="request[header][name]" placeholder="Header name">:
+				<input type="text" name="request[header][value]" placeholder="Header value">
 				<button type="button" class="btn btn-danger">Remove</button>
 			</p>
 		</script>

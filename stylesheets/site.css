@@ -2,3 +2,7 @@
 @import "../vendor/bootstrap/css/bootstrap.css";
 @import "../vendor/bootstrap/css/bootstrap-responsive.css";
 
+textarea {
+	font-family: Consolas, Monaco, monospace;
+	white-space: pre;
+}
