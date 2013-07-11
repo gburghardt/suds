@@ -186,6 +186,8 @@ Suds.RequestView = Backbone.View.extend({
 				].join(""));
 			}
 		}
+
+		document.getElementById("transport-updated").innerHTML = new Date();
 	},
 
 	removeHeader: function(event) {
