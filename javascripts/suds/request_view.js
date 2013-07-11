@@ -1,4 +1,14 @@
 Suds.RequestView = Backbone.View.extend({
+
+	editor: null,
+
+	editorOptions: {
+		autoCloseBrackets: true,
+		autoCloseTags: true,
+		lineNumbers: true,
+		mode: "xml"
+	},
+
 	events: {
 		"click button[type=reset]": "confirmResetForm",
 		"click .request-headers button.btn-danger": "removeHeader",
@@ -21,15 +31,13 @@ Suds.RequestView = Backbone.View.extend({
 		}
 
 		this.fillBodyHistory();
+		this.editor = CodeMirror.fromTextArea(this.el.getElementsByTagName("textarea")[0], this.editorOptions);
 	},
 
 	addHeader: function(event) {
 		if ((event.type === "keypress" && event.keyCode == 13) || event.type == "click") {
 			event.stopPropagation();
 			event.preventDefault();
-			var templateVars = {
-				temp_id: new Date().getTime()
-			};
 			var template = document.getElementById("request-header-tpl").innerHTML;
 			var $newHeader = jQuery(template);
 			this.$el.find(".request-headers-actions").before($newHeader);
@@ -42,14 +50,13 @@ Suds.RequestView = Backbone.View.extend({
 		var body = this.$el.find(".body-history").val();
 
 		if (body) {
-			this.$el.find("textarea").val(decodeURIComponent(body));
+			this.editor.setValue(decodeURIComponent(body));
 		}
 	},
 
 	beautifyRequestBodyXml: function(event) {
 		event.preventDefault();
-		var $body = this.$el.find("textarea");
-		$body.val(vkbeautify.xml($body.val()));
+		this.editor.setValue( vkbeautify.xml( this.editor.getValue() ) );
 	},
 
 	confirmResetForm: function(event) {
@@ -94,7 +101,7 @@ Suds.RequestView = Backbone.View.extend({
 			var $headers = this.$el.find("fieldset.request-headers input");
 			var method = this.$el.find("select[name=request\\[method\\]]").val().toUpperCase();
 			var url = this.$el.find("input[name=request\\[url\\]]").val();
-			var body = this.$el.find("textarea").val();
+			var body = this.editor.getValue();
 			var that = this;
 			var $readyState = jQuery("#transport-readyState").html("...");
 			var $status = jQuery("#transport-status").html("...");
@@ -137,8 +144,7 @@ Suds.RequestView = Backbone.View.extend({
 
 	minifyRequestBodyXml: function(event) {
 		event.preventDefault();
-		var $body = this.$el.find("textarea");
-		$body.val(vkbeautify.xmlmin($body.val()));
+		this.editor.setValue( vkbeautify.xmlmin( this.editor.getValue() ) );
 	},
 
 	recordBodyHistory: function(s) {

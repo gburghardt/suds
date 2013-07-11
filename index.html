@@ -56,19 +56,18 @@
 								<button type="button" class="btn btn-block">Add Header</button>
 							</p>
 						</fieldset>
-						<fieldset>
-							<legend>Request Body</legend>
-							<p>
-								<button type="button" class="btn" data-action="beautify-xml">Beautify XML</button>
-								<button type="button" class="btn" data-action="minify-xml">Minify XML</button>
-							</p>
-							<textarea cols="80" rows="30" name="request[body]" class="input-block-level" spellcheck="false"></textarea>
-							<p>
-								History:
-								<select class="body-history"></select>
-								<button type="button" class="btn" data-action="body-history-apply">Load</button>
-							</p>
-						</fieldset>
+						
+						<h2>Request Body</h2>
+						<p>
+							<button type="button" class="btn" data-action="beautify-xml">Beautify XML</button>
+							<button type="button" class="btn" data-action="minify-xml">Minify XML</button>
+						</p>
+						<textarea cols="80" rows="30" name="request[body]" class="input-block-level" spellcheck="false" style="width: 100%;"></textarea>
+						<p>
+							History:
+							<select class="body-history"></select>
+							<button type="button" class="btn" data-action="body-history-apply">Load</button>
+						</p>
 						<p>
 							<button type="reset" class="btn btn-warning">Clear Form</button>
 							<button type="submit" class="btn">Make Request</button>
@@ -119,6 +118,7 @@
 		<script type="text/javascript" src="./vendor/bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript" src="./vendor/vkBeautify/vkbeautify.js"></script>
 		<script type="text/javascript" src="./vendor/codemirror-3.14/lib/codemirror.js"></script>
+		<script type="text/javascript" src="./vendor/codemirror-3.14/mode/xml/xml.js"></script>
 		<script type="text/javascript" src="./javascripts/suds.js"></script>
 		<script type="text/javascript" src="./javascripts/suds/request_view.js"></script>
 		<script type="text/javascript" src="./javascripts/app.js"></script>

@@ -1,6 +1,11 @@
 @import "../vendor/normalize/normalize.css";
 @import "../vendor/bootstrap/css/bootstrap.css";
 @import "../vendor/bootstrap/css/bootstrap-responsive.css";
+@import "../vendor/codemirror-3.14/lib/codemirror.css";
+
+.CodeMirror-scroll {
+	overflow-x: auto;
+}
 
 textarea {
 	font-family: Consolas, Monaco, monospace;
