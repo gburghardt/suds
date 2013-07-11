@@ -1,6 +1,8 @@
 Suds.RequestView = Backbone.View.extend({
 
-	editor: null,
+	responseBodyEditor: null,
+
+	requestBodyEditor: null,
 
 	editorOptions: {
 		autoCloseBrackets: true,
@@ -31,7 +33,10 @@ Suds.RequestView = Backbone.View.extend({
 		}
 
 		this.fillBodyHistory();
-		this.editor = CodeMirror.fromTextArea(this.el.getElementsByTagName("textarea")[0], this.editorOptions);
+		this.requestBodyEditor = CodeMirror.fromTextArea(this.el.getElementsByTagName("textarea")[0], this.editorOptions);
+		this.requestBodyEditor.setSize("height", 600);
+		this.responseBodyEditor = CodeMirror.fromTextArea(document.getElementById("transport").getElementsByTagName("textarea")[0], this.editorOptions);
+		this.responseBodyEditor.setSize("height", 600);
 	},
 
 	addHeader: function(event) {
@@ -50,13 +55,13 @@ Suds.RequestView = Backbone.View.extend({
 		var body = this.$el.find(".body-history").val();
 
 		if (body) {
-			this.editor.setValue(decodeURIComponent(body));
+			this.requestBodyEditor.setValue(decodeURIComponent(body));
 		}
 	},
 
 	beautifyRequestBodyXml: function(event) {
 		event.preventDefault();
-		this.editor.setValue( vkbeautify.xml( this.editor.getValue() ) );
+		this.requestBodyEditor.setValue( vkbeautify.xml( this.requestBodyEditor.getValue() ) );
 	},
 
 	confirmResetForm: function(event) {
@@ -101,7 +106,7 @@ Suds.RequestView = Backbone.View.extend({
 			var $headers = this.$el.find("fieldset.request-headers input");
 			var method = this.$el.find("select[name=request\\[method\\]]").val().toUpperCase();
 			var url = this.$el.find("input[name=request\\[url\\]]").val();
-			var body = this.editor.getValue();
+			var body = this.requestBodyEditor.getValue();
 			var that = this;
 			var $readyState = jQuery("#transport-readyState").html("...");
 			var $status = jQuery("#transport-status").html("...");
@@ -144,7 +149,7 @@ Suds.RequestView = Backbone.View.extend({
 
 	minifyRequestBodyXml: function(event) {
 		event.preventDefault();
-		this.editor.setValue( vkbeautify.xmlmin( this.editor.getValue() ) );
+		this.requestBodyEditor.setValue( vkbeautify.xmlmin( this.requestBodyEditor.getValue() ) );
 	},
 
 	recordBodyHistory: function(s) {
@@ -163,12 +168,11 @@ Suds.RequestView = Backbone.View.extend({
 	},
 
 	recordRequest: function(transport) {
-		var $el = jQuery("#transport");
 		var headers = transport.getAllResponseHeaders().split(/[\n\r]+/g);
 		var match;
-		var $table = $el.find("table tbody").empty();
+		var $table = jQuery("#transport table tbody").empty();
 
-		$el.find("textarea").val(vkbeautify.xml(transport.responseText));
+		this.responseBodyEditor.setValue( vkbeautify.xml(transport.responseText) );
 
 		for (var i = 0, length = headers.length; i < length; i++) {
 			match = headers[i].match(/([-\w]+):\s*(.*?)$/);
